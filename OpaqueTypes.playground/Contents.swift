@@ -68,13 +68,28 @@ let vehicles: [Shape] = [
     ShapeTwo(),
 ]
 
-// MARK: - 🧚🏼‍♀️ Existential types (any) 🧚🏼‍♀️
+// MARK: - 🧚🏼‍♀️ Existential (boxed) types (any) 🧚🏼‍♀️
 
 // 🧚🏼‍♀️ About
 // The any keyword was introduced in Swift 5.6. It is introduced for the purpose of creating an existential type. In Swift 5.6, the any keyword is not mandatory when creating an existential type, but in Swift 5.7, you will get a compile error if you failed to do so.
 
 let myShape: Shape = ShapeOne() // 🔴 Compile error in Swift 5.7: Use of protocol 'Shape' as a type must be written 'any Shape'
 let yourShape: any Shape = ShapeOne() // ✅ No compile error in Swift 5.7
+
+
+// MARK: - ‼️ Difference between an Opaque and Existential (boxed) types ‼️
+
+// ‼️ These two kinds of return type differ in whether they preserve type identity:
+
+// 🤴🏾 Opaque:
+// 👉🏼 An opaque type refers to one SPECIFIC type, although the caller of the function isn’t able to see which type. Opaque types let you make stronger guarantees about those underlying types.
+// 👉🏼 Opaque types are statically known at compile time, which means the compiler knows the exact type but hides it from the caller, here code is executed through static dispatch.
+
+// 🧚🏼‍♀️ Boxed (existential):
+// 👉🏼 A boxed protocol type can refer to ANY type that conforms to the protocol. Generally speaking, boxed protocol types give you more flexibility about the underlying types of the values they store.
+// 👉🏼 Unlike opaque types, existential types involve dynamic dispatch, which means the actual type of the value is not known at compile time. Instead, it's determined at runtime based on the underlying concrete type.
+
+
 
 // MARK: - 🀄️ AnyObject 🀄️
 
@@ -107,6 +122,13 @@ let arrayOfAny: [Any] = [
     "string",
     { (message: String) -> Void in print(message) }
 ]
+
+
+
+
+
+
+
 
 // Sources:
 // https://swiftsenpai.com/swift/understanding-some-and-any/
